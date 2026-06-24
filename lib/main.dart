@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement dispose
     super.dispose();
     _weightCtrl.dispose();
-    _heightCtrl.dispose();
+    _heightCtrl.dispose(); // comments
   }
 
   @override
