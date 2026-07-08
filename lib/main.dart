@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'info.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -89,12 +91,82 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: .center,
+            children: [
+                Stack(
+                  fit: StackFit.loose,
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                        color: Colors.orange,
+                          width: 3
+                      )
+                      ),
+                      child: Image.asset(_bmiImage),
+                    ),
+                    Container(
+                      width: 150,
+                      height: 150,
+                      alignment: Alignment.center,
+                      child: _bmi == 0.0
+                          ? Text(
+                        'Enter body weight and height to know your BMI',
+                        textAlign: .center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.orangeAccent,
+                        ),
+                      )
+                          : Text(''),
+                    )
+                  ],
+                ),
+              const Text('Your Body Mass Index (BMI) is : '),
+              Text(
+                _bmiOutput,
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              TextField(
+                controller: _weightCtrl,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Enter weight(kg)'
+                ),
+              ),
+              TextField(
+                controller: _heightCtrl,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: 'Enter height(m)'
+                ),
+              ),
+              Expanded(child: SizedBox()),
+              IconButton(onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Info(bmi: _bmiOutput)),
+                );
+              }, icon: Icon(Icons.info),
+                iconSize: 48,
+                color: Colors.orangeAccent,
+              ),
+              Row(
+                mainAxisAlignment: .center,
+                children: [
+                  ElevatedButton(onPressed: _resetScreen, child: Text('Reset')),
+                  ElevatedButton(onPressed: _calculateBMI, child: Text('Calculate'))
+                ],
+              ),
+            ],
+          ),
         ),
       ),
 
